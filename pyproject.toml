@@ -1,0 +1,75 @@
+[tool.poetry]
+name = "gov_portal_backend"
+version = "0.1.0"
+description = "Backend for a highly performant, secure, and scalable government services portal."
+authors = [
+    "dev2pew <35352@iitu.edu.kz>",
+    "ceo4you <35387@iitu.edu.kz>"
+]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+# CORE FRAMEWORK                        ------------------------------------------------------------
+
+django = "^4.2"
+djangorestframework = "^3.14"
+psycopg2-binary = "^2.9.9" # PostgreSQL adapter
+gunicorn = "^21.2.0"      # WSGI HTTP Server for production
+uvicorn = "^0.23.2"       # ASGI server, can be used with Gunicorn for async capabilities
+
+
+# ASYNCHRONOUS TASKS & SCHEDULING       ------------------------------------------------------------
+
+celery = "^5.3.4"
+redis = "^5.0.1"          # Broker for Celery and caching layer
+
+
+# AUTHENTICATION & SECURITY             ------------------------------------------------------------
+
+djangorestframework-simplejwt = "^5.3.0"
+django-otp = "^1.2.2"
+django-cors-headers = "^4.2.0" # For handling Cross-Origin Resource Sharing
+
+
+# API DOCUMENTATION                     ------------------------------------------------------------
+
+drf-spectacular = "^0.26.5"
+
+
+# UTILITIES                             ------------------------------------------------------------
+
+python-decouple = "^3.8"    # For managing environment variables (e.g., SECRET_KEY, DB_PASS)
+pillow = "^10.1.0"          # For handling image uploads (profile pictures, etc.)
+
+
+[tool.poetry.group.dev.dependencies]
+
+# CODE QUALITY & FORMATTING             ------------------------------------------------------------
+
+black = "^23.9.1"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+
+
+# TESTING                               ------------------------------------------------------------
+
+pytest = "^7.4.2"
+pytest-django = "^4.7.0"
+pytest-cov = "^4.1.0" # For checking test coverage
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
