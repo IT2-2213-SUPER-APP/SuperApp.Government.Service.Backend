@@ -14,26 +14,26 @@ from pathlib import Path
 from decouple import config
 from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BUILD PATHS INSIDE THE PROJECT LIKE THIS: BASE_DIR / 'SUBDIR'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# QUICK-START DEVELOPMENT SETTINGS - UNSUITABLE FOR PRODUCTION
+# SEE HTTPS://DOCS.DJANGOPROJECT.COM/EN/4.2/HOWTO/DEPLOYMENT/CHECKLIST/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Load the secret key from the .env file for security
+# SECURITY WARNING: KEEP THE SECRET KEY USED IN PRODUCTION SECRET!
+# LOAD THE SECRET KEY FROM THE .ENV FILE FOR SECURITY
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Load DEBUG mode from .env file. It's safer to default to False.
+# SECURITY WARNING: DON'T RUN WITH DEBUG TURNED ON IN PRODUCTION!
+# LOAD DEBUG MODE FROM .ENV FILE. IT'S SAFER TO DEFAULT TO FALSE.
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# Load allowed hosts from .env file.
+# LOAD ALLOWED HOSTS FROM .ENV FILE.
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost').split(',')
 
 
-# Application definition
+# APPLICATION DEFINITION
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # 3rd Party Apps
+    # 3RD PARTY APPS
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -53,26 +53,26 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_prometheus',
 
-    # Local Apps (to be created)
-    # 'users.apps.UsersConfig',
-    # 'payments.apps.PaymentsConfig',
-    # 'content.apps.ContentConfig',
-    # 'tickets.apps.TicketsConfig',
+    # LOCAL APPS
+    'users.apps.UsersConfig',
+    # 'PAYMENTS.APPS.PAYMENTSCONFIG',
+    # 'CONTENT.APPS.CONTENTCONFIG',
+    # 'TICKETS.APPS.TICKETSCONFIG',
 ]
 
 MIDDLEWARE = [
-    # Prometheus metrics middleware should be first
+    # PROMETHEUS METRICS MIDDLEWARE SHOULD BE FIRST
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    # CORS Middleware
+    # CORS MIDDLEWARE
     'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # Prometheus metrics middleware should be last
+    # PROMETHEUS METRICS MIDDLEWARE SHOULD BE LAST
     'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
@@ -97,10 +97,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "core.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-# Configured to use PostgreSQL with settings from the .env file.
-# The ENGINE is wrapped by django-prometheus to export database metrics.
+# DATABASE
+# HTTPS://DOCS.DJANGOPROJECT.COM/EN/4.2/REF/SETTINGS/#DATABASES
+# CONFIGURED TO USE POSTGRESQL WITH SETTINGS FROM THE .ENV FILE.
+# THE ENGINE IS WRAPPED BY DJANGO-PROMETHEUS TO EXPORT DATABASE METRICS.
 DATABASES = {
     'default': {
         'ENGINE': 'django_prometheus.db.backends.postgresql',
@@ -112,17 +112,20 @@ DATABASES = {
     }
 }
 
-# Authentication Backends (for django-guardian)
-# https://django-guardian.readthedocs.io/en/stable/configuration.html
-# This is required for object-level permissions.
+# TELL DJANGO TO USE OUR CUSTOM USER MODEL
+AUTH_USER_MODEL = 'users.User'
+
+# AUTHENTICATION BACKENDS (FOR DJANGO-GUARDIAN)
+# HTTPS://DJANGO-GUARDIAN.READTHEDOCS.IO/EN/STABLE/CONFIGURATION.HTML
+# THIS IS REQUIRED FOR OBJECT-LEVEL PERMISSIONS.
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # default
+    'django.contrib.auth.backends.ModelBackend', # DEFAULT
     'guardian.backends.ObjectPermissionBackend',
 )
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+# PASSWORD VALIDATION
+# HTTPS://DOCS.DJANGOPROJECT.COM/EN/4.2/REF/SETTINGS/#AUTH-PASSWORD-VALIDATORS
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -140,8 +143,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+# INTERNATIONALIZATION
+# HTTPS://DOCS.DJANGOPROJECT.COM/EN/4.2/TOPICS/I18N/
 
 LANGUAGE_CODE = "en-us"
 
@@ -152,24 +155,24 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# STATIC FILES (CSS, JAVASCRIPT, IMAGES)
+# HTTPS://DOCS.DJANGOPROJECT.COM/EN/4.2/HOWTO/STATIC-FILES/
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files (User Uploads)
+# MEDIA FILES (USER UPLOADS)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# DEFAULT PRIMARY KEY FIELD TYPE
+# HTTPS://DOCS.DJANGOPROJECT.COM/EN/4.2/REF/SETTINGS/#DEFAULT-AUTO-FIELD
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Django REST Framework Settings
-# https://www.django-rest-framework.org/api-guide/settings/
+# DJANGO REST FRAMEWORK SETTINGS
+# HTTPS://WWW.DJANGO-REST-FRAMEWORK.ORG/API-GUIDE/SETTINGS/
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -196,8 +199,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-# DRF Spectacular (API Docs) Settings
-# https://drf-spectacular.readthedocs.io/en/latest/settings.html
+# DRF SPECTACULAR (API DOCS) SETTINGS
+# HTTPS://DRF-SPECTACULAR.READTHEDOCS.IO/EN/LATEST/SETTINGS.HTML
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Government Services Portal API',
     'DESCRIPTION': 'API documentation for the Government Services Portal backend.',
@@ -205,8 +208,8 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
-# Simple JWT Settings
-# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+# SIMPLE JWT SETTINGS
+# HTTPS://DJANGO-REST-FRAMEWORK-SIMPLEJWT.READTHEDOCS.IO/EN/LATEST/SETTINGS.HTML
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -215,17 +218,17 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": True,
 }
 
-# CORS Settings
-# https://github.com/adamchainz/django-cors-headers
-# Add your frontend URL here for development. For production, be more restrictive.
+# CORS SETTINGS
+# HTTPS://GITHUB.COM/ADAMCHAINZ/DJANGO-CORS-HEADERS
+# ADD YOUR FRONTEND URL HERE FOR DEVELOPMENT. FOR PRODUCTION, BE MORE RESTRICTIVE.
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
-# You can also use CORS_ALLOW_ALL_ORIGINS = True for initial development, but it's insecure.
+# YOU CAN ALSO USE CORS_ALLOW_ALL_ORIGINS = TRUE FOR INITIAL DEVELOPMENT, BUT IT'S INSECURE.
 
-# Celery Configuration
-# https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html
+# CELERY CONFIGURATION
+# HTTPS://DOCS.CELERYQ.DEV/EN/STABLE/DJANGO/FIRST-STEPS-WITH-DJANGO.HTML
 CELERY_BROKER_URL = f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/0"
 CELERY_RESULT_BACKEND = f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/0"
 CELERY_ACCEPT_CONTENT = ['json']
@@ -233,7 +236,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
-# django-safedelete configuration
-# https://github.com/makinacorpus/django-safedelete
-# Sets the default deletion policy to soft-delete for all models that inherit from SafeDeleteModel.
+# DJANGO-SAFEDELETE CONFIGURATION
+# HTTPS://GITHUB.COM/MAKINACORPUS/DJANGO-SAFEDELETE
+# SETS THE DEFAULT DELETION POLICY TO SOFT-DELETE FOR ALL MODELS THAT INHERIT FROM SAFEDELETEMODEL.
 SAFE_DELETE_POLICY = 'soft'

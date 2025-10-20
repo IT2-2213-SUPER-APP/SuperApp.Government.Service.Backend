@@ -19,20 +19,21 @@ from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
-    # Django Admin Panel
+    # DJANGO ADMIN PANEL
     path("admin/", admin.site.urls),
 
-    # API v1 - This is where you will include your app's URLs later
-    # Example: path('api/v1/', include('users.urls')),
+    # API V1 - USER AUTHENTICATION AND PROFILE ENDPOINTS
+    path('api/v1/auth/', include('users.urls', namespace='users_v1')),
 
-    # API Documentation Routes (drf-spectacular)
-    # Serves the OpenAPI 3.0 schema
+
+    # API DOCUMENTATION ROUTES (DRF-SPECTACULAR)
+    # SERVES THE OPENAPI 3.0 SCHEMA
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI endpoints:
+    # OPTIONAL UI ENDPOINTS:
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
-    # Prometheus metrics endpoint (django-prometheus)
-    # This will expose a /metrics endpoint
+    # PROMETHEUS METRICS ENDPOINT (DJANGO-PROMETHEUS)
+    # THIS WILL EXPOSE A /METRICS ENDPOINT
     path('', include('django_prometheus.urls')),
 ]
