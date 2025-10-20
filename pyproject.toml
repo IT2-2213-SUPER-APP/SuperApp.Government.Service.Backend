@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "gov_portal_backend"
 version = "0.1.0"
-description = "Backend for a highly performant, secure, and scalable government services portal."
+description = "backend for a highly performant, secure, and scalable government services portal."
 authors = [
     "dev2pew <35352@iitu.edu.kz>",
     "ceo4you <35387@iitu.edu.kz>"
@@ -13,53 +13,71 @@ package-mode = false
 python = "^3.11"
 
 
-# CORE FRAMEWORK                        ------------------------------------------------------------
+# CORE FRAMEWORK                                    ------------------------------------------------------------
 
 django = "^4.2"
 djangorestframework = "^3.14"
-psycopg2-binary = "^2.9.9" # PostgreSQL adapter
-gunicorn = "^21.2.0"      # WSGI HTTP Server for production
-uvicorn = "^0.23.2"       # ASGI server, can be used with Gunicorn for async capabilities
+psycopg2-binary = "^2.9.9"                          # PostgreSQL adapter
+gunicorn = "^21.2.0"                                # WSGI HTTP Server for production
+uvicorn = "^0.23.2"                                 # ASGI server, can be used with Gunicorn for async capabilities
 
 
-# ASYNCHRONOUS TASKS & SCHEDULING       ------------------------------------------------------------
+# ASYNCHRONOUS TASKS & SCHEDULING                   ------------------------------------------------------------
 
 celery = "^5.3.4"
-redis = "^5.0.1"          # Broker for Celery and caching layer
+redis = "^5.0.1"                                    # Broker for Celery and caching layer
 
 
-# AUTHENTICATION & SECURITY             ------------------------------------------------------------
+# AUTHENTICATION & SECURITY                         ------------------------------------------------------------
 
 djangorestframework-simplejwt = "^5.3.0"
 django-otp = "^1.2.2"
-django-cors-headers = "^4.2.0" # For handling Cross-Origin Resource Sharing
+django-cors-headers = "^4.2.0"                      # For handling Cross-Origin Resource Sharing
 
 
-# API DOCUMENTATION                     ------------------------------------------------------------
+# FINE-GRAINED PERMISSIONS & RATE LIMITING          ------------------------------------------------------------
 
-drf-spectacular = "^0.26.5"
+django-guardian = "^2.4.0"                          # Object-level permissions for Django
+django-ratelimit = "^4.1.0"                         # For rate-limiting views to prevent spam/abuse
 
 
-# UTILITIES                             ------------------------------------------------------------
+# API DOCUMENTATION                                 ------------------------------------------------------------
 
-python-decouple = "^3.8"    # For managing environment variables (e.g., SECRET_KEY, DB_PASS)
-pillow = "^10.1.0"          # For handling image uploads (profile pictures, etc.)
+drf-spectacular = "^0.26.5"                         # OpenAPI 3 schema generation
+
+
+# OBSERVABILITY (LOGGING, METRICS, TRACING)         ------------------------------------------------------------
+
+structlog = "^23.2.0"                               # Structured logging
+django-prometheus = "^2.3.1"                        # Export Django metrics for Prometheus
+opentelemetry-distro = "^0.40b0"                    # OpenTelemetry core
+opentelemetry-instrumentation-django = "^0.40b0"    # Django instrumentation
+opentelemetry-instrumentation-celery = "^0.40b0"    # Celery instrumentation
+opentelemetry-instrumentation-psycopg2 = "^0.40b0"  # Psycopg2 (PostgreSQL) instrumentation
+opentelemetry-instrumentation-redis = "^0.40b0"     # Redis instrumentation
+
+
+# UTILITIES                                         ------------------------------------------------------------
+
+python-decouple = "^3.8"                            # For managing environment variables (e.g., SECRET_KEY, DB_PASS)
+pillow = "^10.1.0"                                  # For handling image uploads (profile pictures, etc.)
+django-safedelete = "^1.3.2"                        # A clean and easy way to handle soft-deletes
 
 
 [tool.poetry.group.dev.dependencies]
 
-# CODE QUALITY & FORMATTING             ------------------------------------------------------------
+# CODE QUALITY & FORMATTING                         ------------------------------------------------------------
 
 black = "^23.9.1"
 isort = "^5.12.0"
 flake8 = "^6.1.0"
 
 
-# TESTING                               ------------------------------------------------------------
+# TESTING                                           ------------------------------------------------------------
 
 pytest = "^7.4.2"
 pytest-django = "^4.7.0"
-pytest-cov = "^4.1.0" # For checking test coverage
+pytest-cov = "^4.1.0"                               # For checking test coverage
 
 
 [build-system]
