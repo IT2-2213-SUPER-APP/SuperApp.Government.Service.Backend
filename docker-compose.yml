@@ -1,0 +1,71 @@
+services:
+  # PostgreSQL Database Service
+  postgres:
+    # Use a specific version of the official PostgreSQL image with an Alpine base for a smaller size.
+    # Check for newer versions on Docker Hub: https://hub.docker.com/_/postgres
+    image: postgres:16.2-alpine
+
+    # Explicitly name the container for easier identification and management.
+    container_name: gov_portal_postgres
+
+    # This policy ensures the container restarts automatically unless it is explicitly stopped.
+    restart: unless-stopped
+
+    # Environment variables to configure the PostgreSQL instance.
+    # These are read from the .env file in the same directory.
+    # This keeps secrets out of the compose file.
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    # Map the host machine's port 5432 to the container's port 5432.
+    # This allows your local Django application to connect to the database.
+    ports:
+      - '5432:5432'
+
+    # Connect the container to our custom network.
+    networks:
+      - gov_portal_net
+
+    # Mount a named volume to persist database data across container restarts.
+    volumes:
+      - gov_portal_postgres_data:/var/lib/postgresql/data
+
+  # Redis Service for Caching and Celery
+  redis:
+    # Use a specific version of the official Redis image with an Alpine base.
+    # Check for newer versions on Docker Hub: https://hub.docker.com/_/redis
+    image: redis:7.2-alpine
+
+    # Explicitly name the container.
+    container_name: gov_portal_redis
+
+    # Restart policy.
+    restart: unless-stopped
+
+    # Map the host machine's port 6379 to the container's port 6379.
+    # This allows your local Django/Celery app to connect to Redis.
+    ports:
+      - '6379:6379'
+
+    # Connect the container to our custom network.
+    networks:
+      - gov_portal_net
+
+    # Mount a named volume to persist Redis data (e.g., if using AOF or RDB persistence).
+    volumes:
+      - gov_portal_redis_data:/data
+
+# Define the custom network for our services to communicate on.
+networks:
+  gov_portal_net:
+    name: gov_portal_net
+
+# Define the named volumes for data persistence.
+volumes:
+  gov_portal_postgres_data:
+    name: gov_portal_postgres_data
+
+  gov_portal_redis_data:
+    name: gov_portal_redis_data
